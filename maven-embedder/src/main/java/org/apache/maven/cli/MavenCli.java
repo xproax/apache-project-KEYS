@@ -108,6 +108,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.inject.AbstractModule;
 import org.eclipse.aether.transfer.TransferListener;
+import org.fusesource.jansi.Ansi;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1286,6 +1287,7 @@ public class MavenCli
         if ( commandLine.hasOption( CLIManager.BATCH_MODE ) )
         {
             request.setInteractiveMode( false );
+            Ansi.setEnabled( false );
         }
 
         boolean noSnapshotUpdates = false;
