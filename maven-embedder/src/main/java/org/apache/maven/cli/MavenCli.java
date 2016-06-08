@@ -109,6 +109,7 @@ import com.google.common.io.Files;
 import com.google.inject.AbstractModule;
 import org.eclipse.aether.transfer.TransferListener;
 import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -285,6 +286,7 @@ public class MavenCli
         PlexusContainer localContainer = null;
         try
         {
+            AnsiConsole.systemInstall();
             initialize( cliRequest );
             cli( cliRequest );
             logging( cliRequest );
@@ -327,6 +329,7 @@ public class MavenCli
             {
                 localContainer.dispose();
             }
+            AnsiConsole.systemUninstall();
         }
     }
 
@@ -466,6 +469,9 @@ public class MavenCli
         {
             File logFile = new File( cliRequest.commandLine.getOptionValue( CLIManager.LOG_FILE ) );
             logFile = resolveFile( logFile, cliRequest.workingDirectory );
+
+            // disable ANSI colors
+            Ansi.setEnabled( false );
 
             // redirect stdout and stderr to file
             try
